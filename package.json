@@ -1,0 +1,23 @@
+{
+  "name": "movie-app",
+  "version": "1.0.0",
+  "description": "Movie app API with session authentication, movies, actors and reviews",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch index.js",
+    "start": "node index.js",
+    "seed": "node seed.js"
+  },
+  "keywords": [],
+  "author": "eyad",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.3.0",
+    "mongoose": "^9.0.0",
+    "multer": "^2.0.0",
+    "zod": "^4.0.0"
+  }
+}
