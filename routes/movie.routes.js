@@ -13,7 +13,7 @@ export const movieRouter = express.Router();
 
 const checkMovieOwner = checkOwner(Movie, { label: "movie", ownerField: "createdBy" });
 
-// GET /api/movies - list movies, optionally filtered by title and actor
+//list movies
 movieRouter.get("/", async (req, res) => {
   const movies = await Movie.searchMovies({
     search: String(req.query.search ?? ""),
@@ -23,7 +23,7 @@ movieRouter.get("/", async (req, res) => {
   res.json({ data: movies });
 });
 
-// GET /api/movies/:id - one movie with its cast and populated reviews
+//one movie with its cast and populated reviews
 movieRouter.get("/:id", validateObjectId(), async (req, res) => {
   const movie = await Movie.findById(req.params.id)
     .populate("actors")
@@ -40,7 +40,7 @@ movieRouter.get("/:id", validateObjectId(), async (req, res) => {
   res.json({ data: movie });
 });
 
-// POST /api/movies - authenticated users can add a movie (they become its owner)
+//authenticated users can add a movie
 movieRouter.post(
   "/",
   checkAuth,
@@ -61,7 +61,7 @@ movieRouter.post(
   },
 );
 
-// PATCH /api/movies/:id - only the creator may update details, poster or cast list
+//only the creator may update details, poster or cast list
 movieRouter.patch(
   "/:id",
   checkAuth,
@@ -92,7 +92,7 @@ movieRouter.patch(
   },
 );
 
-// DELETE /api/movies/:id - only the creator may delete; cascades to its reviews
+//only the creator may delete; cascades to its reviews
 movieRouter.delete("/:id", checkAuth, validateObjectId(), checkMovieOwner, async (req, res) => {
   // findByIdAndDelete (not deleteOne) so the cascade hook in models/Movie.js fires.
   const movie = await Movie.findByIdAndDelete(req.params.id);
@@ -102,7 +102,7 @@ movieRouter.delete("/:id", checkAuth, validateObjectId(), checkMovieOwner, async
   res.json({ message: "movie deleted successfully" });
 });
 
-// POST /api/movies/:id/reviews - add a review as the current user
+//add a review as the current user
 movieRouter.post(
   "/:id/reviews",
   checkAuth,
