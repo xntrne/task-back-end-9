@@ -1,7 +1,6 @@
 import dns from "node:dns";
 import mongoose from "mongoose";
 
-// Prefer IPv4 so Atlas / local MongoDB connections do not hang on broken IPv6 routes.
 dns.setDefaultResultOrder("ipv4first");
 
 export async function connectDB() {
