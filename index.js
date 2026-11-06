@@ -9,11 +9,10 @@ import { movieRouter } from "./routes/movie.routes.js";
 import { pagesRouter } from "./routes/pages.routes.js";
 import { reviewRouter } from "./routes/review.routes.js";
 
-// Node's built-in .env loader, so no dotenv dependency is needed.
 try {
   process.loadEnvFile();
 } catch {
-  // .env is optional; environment variables can be provided by the host.
+
 }
 
 const app = express();
