@@ -56,7 +56,7 @@ const movieSchema = new mongoose.Schema(
   },
 );
 
-// Community reviews: every review document that points at this movie.
+//Community reviews
 movieSchema.virtual("reviews", {
   ref: "Review",
   localField: "_id",
@@ -79,7 +79,7 @@ movieSchema.statics.searchMovies = function ({ search = "", actor = "" } = {}) {
   return this.find(filter).populate("actors").sort({ createdAt: -1 });
 };
 
-// Cascade: deleting a movie removes all of its reviews.
+//deleting a movie removes all of its reviews.
 movieSchema.pre("findOneAndDelete", async function () {
   const movie = await this.model.findOne(this.getFilter());
 
