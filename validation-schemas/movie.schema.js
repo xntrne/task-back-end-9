@@ -2,7 +2,6 @@ import { z } from "zod";
 
 const objectIdSchema = z.string().regex(/^[a-f\d]{24}$/i, "invalid actor id");
 
-// Multipart forms send genres as "Action, Sci-Fi" or as a JSON array string.
 function parseList(value) {
   if (Array.isArray(value)) return value.filter(Boolean);
   if (typeof value !== "string") return value;
@@ -14,7 +13,7 @@ function parseList(value) {
     const parsed = JSON.parse(trimmed);
     if (Array.isArray(parsed)) return parsed.map(String);
   } catch {
-    // Not JSON, fall back to comma separated values.
+
   }
 
   return trimmed
