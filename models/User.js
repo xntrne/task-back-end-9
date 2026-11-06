@@ -38,7 +38,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// Hash the password only when it changed so profile updates do not re-hash it.
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);
@@ -68,7 +67,6 @@ userSchema.methods.clearResetOtp = function () {
   this.resetOtpExpires = null;
 };
 
-// Never leak credentials or reset codes to the client.
 userSchema.set("toJSON", {
   transform: (_document, returnedObject) => {
     delete returnedObject.password;
