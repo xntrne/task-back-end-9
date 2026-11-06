@@ -11,14 +11,14 @@ export const reviewRouter = express.Router();
 
 const checkReviewOwner = checkOwner(Review, { label: "review", ownerField: "user" });
 
-// GET /api/reviews/my - reviews written by the current user
+//reviews written by the current user
 reviewRouter.get("/my", checkAuth, async (req, res) => {
   const reviews = await Review.findByUser(req.user._id);
 
   res.json({ data: reviews });
 });
 
-// POST /api/reviews/:movieId - alternative route to add a review to a movie
+//alternative route to add a review to a movie
 reviewRouter.post(
   "/:movieId",
   checkAuth,
@@ -27,7 +27,7 @@ reviewRouter.post(
   createReview,
 );
 
-// PATCH /api/reviews/:id - only the author may edit their review
+//only the author may edit their review
 reviewRouter.patch(
   "/:id",
   checkAuth,
@@ -45,7 +45,7 @@ reviewRouter.patch(
   },
 );
 
-// DELETE /api/reviews/:id - only the author may delete their review
+//only the author may delete their review
 reviewRouter.delete("/:id", checkAuth, validateObjectId(), checkReviewOwner, async (req, res) => {
   await req.resource.deleteOne();
 
