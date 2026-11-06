@@ -43,7 +43,6 @@ export const upload = multer({
 export function removeUploadedFile(filename) {
   if (!filename) return;
 
-  // basename() prevents path traversal outside the uploads folder.
   const filePath = path.join(uploadDirectory, path.basename(filename));
 
   fs.promises.unlink(filePath).catch(() => {});
