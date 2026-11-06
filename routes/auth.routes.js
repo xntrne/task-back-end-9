@@ -30,7 +30,7 @@ function getClearCookieOptions() {
   return options;
 }
 
-// POST /auth/register - create an account (no session yet)
+//create an account
 authRouter.post("/register", upload.single("image"), validateBody(registerSchema), async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -57,7 +57,7 @@ authRouter.post("/register", upload.single("image"), validateBody(registerSchema
   });
 });
 
-// POST /auth/login - verify credentials and open a session
+//verify credentials and open a session
 authRouter.post("/login", validateBody(loginSchema), async (req, res) => {
   const { email, password } = req.body;
 
@@ -77,7 +77,7 @@ authRouter.post("/login", validateBody(loginSchema), async (req, res) => {
   });
 });
 
-// POST /auth/logout - destroy the session and clear the cookie
+//destroy the session and clear the cookie
 authRouter.post("/logout", async (req, res) => {
   const sessionId = req.cookies?.[SESSION_COOKIE];
 
@@ -88,7 +88,7 @@ authRouter.post("/logout", async (req, res) => {
   res.json({ message: "logout successful" });
 });
 
-// POST /auth/forgot-password - generate a 6 digit OTP valid for 15 minutes
+//generate a 6 digit OTP valid for 15 minutes
 authRouter.post("/forgot-password", validateBody(forgotPasswordSchema), async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
 
@@ -102,7 +102,7 @@ authRouter.post("/forgot-password", validateBody(forgotPasswordSchema), async (r
   res.json({ message: "otp generated successfully", otp });
 });
 
-// POST /auth/reset-password - verify the OTP and replace the password
+//verify the OTP and replace the password
 authRouter.post("/reset-password", validateBody(resetPasswordSchema), async (req, res) => {
   const { email, otp, new_password } = req.body;
 
@@ -122,7 +122,7 @@ authRouter.post("/reset-password", validateBody(resetPasswordSchema), async (req
   res.json({ message: "password reset successful, you can now login" });
 });
 
-// GET /auth/me - current user from the session cookie
+//current user from the session cookie
 authRouter.get("/me", checkAuth, (req, res) => {
   res.json({ data: { user: req.user } });
 });
