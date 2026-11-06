@@ -14,7 +14,7 @@ export function checkOwner(Model, { label, ownerField = "user" }) {
         .json({ error: `you are not authorized to ${action} this ${label}` });
     }
 
-    req.resource = resource; // handlers reuse it instead of querying again
+    req.resource = resource;
     next();
   };
 }
