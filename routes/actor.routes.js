@@ -12,14 +12,14 @@ export const actorRouter = express.Router();
 
 const checkActorOwner = checkOwner(Actor, { label: "actor", ownerField: "createdBy" });
 
-// GET /api/actors - list actors, optionally filtered by name
+//list actors
 actorRouter.get("/", async (req, res) => {
   const actors = await Actor.searchByName(String(req.query.search ?? ""));
 
   res.json({ data: actors });
 });
 
-// GET /api/actors/:id - one actor with their filmography
+//one actor with their filmography
 actorRouter.get("/:id", validateObjectId(), async (req, res) => {
   const actor = await Actor.findById(req.params.id).populate({
     path: "movies",
@@ -34,7 +34,7 @@ actorRouter.get("/:id", validateObjectId(), async (req, res) => {
   res.json({ data: actor });
 });
 
-// POST /api/actors - create an actor with up to 5 photos (the creator becomes the owner)
+//create an actor with up to 5 photos
 actorRouter.post(
   "/",
   checkAuth,
@@ -57,7 +57,7 @@ actorRouter.post(
   },
 );
 
-// PATCH /api/actors/:id - only the creator may update details or replace the photo list
+//only the creator may update details or replace the photo list
 actorRouter.patch(
   "/:id",
   checkAuth,
@@ -88,7 +88,7 @@ actorRouter.patch(
   },
 );
 
-// DELETE /api/actors/:id - only the creator may delete; pulls the actor from every movie
+//only the creator may delete; pulls the actor from every movie
 actorRouter.delete("/:id", checkAuth, validateObjectId(), checkActorOwner, async (req, res) => {
   const actor = await Actor.findByIdAndDelete(req.params.id);
 
