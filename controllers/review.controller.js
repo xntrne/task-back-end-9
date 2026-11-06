@@ -1,7 +1,6 @@
 import { Movie } from "../models/Movie.js";
 import { Review } from "../models/Review.js";
 
-// Shared by POST /api/movies/:id/reviews and POST /api/reviews/:movieId
 export async function createReview(req, res) {
   const movieId = req.params.movieId ?? req.params.id;
   const movie = await Movie.findById(movieId);
