@@ -28,7 +28,6 @@ const actorSchema = new mongoose.Schema(
   },
 );
 
-// Filmography: every movie whose actors array contains this actor.
 actorSchema.virtual("movies", {
   ref: "Movie",
   localField: "_id",
