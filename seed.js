@@ -7,7 +7,7 @@ import { User } from "./models/User.js";
 try {
   process.loadEnvFile();
 } catch {
-  // .env is optional.
+
 }
 
 async function seed() {
