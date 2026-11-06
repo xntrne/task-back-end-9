@@ -1,5 +1,3 @@
-// Authorization: only the document's owner may update or delete it.
-// Must run AFTER checkAuth (it needs req.user) and validateObjectId.
 export function checkOwner(Model, { label, ownerField = "user" }) {
   return async (req, res, next) => {
     const resource = await Model.findById(req.params.id);
